@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bishe.dataservice.mapper.PatientMapper">
+  <resultMap id="BaseResultMap" type="com.bishe.api.model.Patient">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="account_money" jdbcType="DECIMAL" property="accountMoney" />
+    <result column="lng" jdbcType="DECIMAL" property="lng" />
+    <result column="lat" jdbcType="DECIMAL" property="lat" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, year, sex, time, account_money, lng, lat, addr, job, nation, phone, id_card
+  </sql>
+  <!--养老注册人数-->
+  <select id="selectCountPatient" resultType="java.lang.Integer">
+    SELECT count(id) FROM u_patient
+  </select>
+
+  <!--查询所有养老人员信息-->
+  <select id="selectAllPatient" resultType="com.bishe.api.model.Patient">
+    SELECT
+      *
+    FROM
+      u_patient
+
+  </select>
+
+  <!--根据姓名查询经纬度-->
+  <select id="selectByName" resultMap="BaseResultMap">
+    SELECT lng,lat
+    from u_patient
+    where name = #{name}
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from u_patient
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from u_patient
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bishe.api.model.Patient">
+    insert  into u_patient (id, name, year,
+      sex, time, account_money,
+      lng, lat, addr, job,
+      nation, phone, id_card
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR},
+      #{sex,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER}, #{accountMoney,jdbcType=DECIMAL},
+      #{lng,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{addr,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR},
+      #{nation,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}
+      )
+
+  </insert>
+  <insert id="insertSelective" parameterType="com.bishe.api.model.Patient">
+    insert into u_patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="accountMoney != null">
+        account_money,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="accountMoney != null">
+        #{accountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bishe.api.model.Patient">
+    update u_patient
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="accountMoney != null">
+        account_money = #{accountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bishe.api.model.Patient">
+    update u_patient
+    set name = #{name,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      time = #{time,jdbcType=INTEGER},
+      account_money = #{accountMoney,jdbcType=DECIMAL},
+      lng = #{lng,jdbcType=DECIMAL},
+      lat = #{lat,jdbcType=DECIMAL},
+      addr = #{addr,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: bishe-web
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  redis:
+    host: localhost
+    port: 6379
+#springboot2.6以上使用Swagger需要配置mvc:pathmatch:matching-strategy: ant_path_matcher
+
+#端口号
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+    encoding:
+      enabled: true
+      charset: utf-8
+      force: true
+
+#dubbo配置
+dubbo:
+  registry:
+    address: zookeeper://localhost:2181
+  scan:
+    base-packages: com.bishe.front
+
+  consumer:
+    check: false
+    timeout: 50000
+    retries: 0
+
+
+
+#短信配置
+jdwx:
+  sms:
+    url: https://way.jd.com/chuangxin/dxjk
+    appkey: 3680fa919b771148da626bbcbd459475
+    content: 【孟氏科技】你的验证码是：%s，3分钟内有效，请勿泄露给他人
+    login-text: 【孟氏科技】登录验证码是：%s，3分钟内有效，请勿泄露给他人
+  realname:
+    url: https://way.jd.com/youhuoBeijing/test
+    appkey: 3680fa919b771148da626bbcbd459475
+
+jwt:
+  secret: 342903934cb944808920b642616b3e76
+
